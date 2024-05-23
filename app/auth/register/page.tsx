@@ -1,5 +1,6 @@
 "use client";
-import { login } from "@/app/_actions/auth";
+import { signup } from "@/app/_actions/auth";
+import { FormError } from "@/app/_components/FormError";
 import { SocialAccounts } from "@/app/_components/SocialAccounts";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,19 +24,45 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Separator } from "@/components/ui/separator";
 import logo from "@/public/mobilewaterbnblogo.png";
 import { RegisterSchema } from "@/schemas/RegisterSchema";
+import { wait } from "@/utils/wait";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail } from "lucide-react";
+import { CheckIcon, Loader2Icon, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 export default function RegisterPage() {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
   });
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const router = useRouter();
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    console.log(values);
+    setError("");
+    setSuccess("");
+
+    startTransition(async () => {
+      signup(values)
+        .then((data) => {
+          setError(data?.error);
+          setSuccess(data?.success);
+          if (data.error) toast.error(`Error: ${data.error}`);
+          if (data.success)
+            toast.success(
+              `🎉🎉🎉 ${data.success}, you will soon be back to homepage`,
+              { duration: 2000 },
+            );
+        })
+        .finally(async () => {
+          await wait(2000);
+          router.push("/");
+        });
+    });
   };
 
   const [isCredential, setIsCredentials] = useState(false);
@@ -133,13 +160,57 @@ export default function RegisterPage() {
                   );
                 }}
               />
-              <Button className="mt-4 w-full text-base" type="submit">
-                Register
-              </Button>
+              <FormError message={error} />
+              {isPending ? (
+                <Button disabled type="submit" size={"lg"}>
+                  <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <>
+                  {success ? (
+                    <Button
+                      disabled
+                      className="mt-2 w-full bg-primary text-base"
+                    >
+                      <span className="flex items-center gap-1">
+                        <CheckIcon /> {success}
+                      </span>
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled={isPending}
+                      type="submit"
+                      className="mt-2 w-full text-base"
+                    >
+                      Register
+                    </Button>
+                  )}
+                </>
+              )}
+
+              {/* {success ? (
+                <Button disabled className="mt-2 w-full bg-primary text-base">
+                  
+                  <span className="flex items-center gap-1">
+                    <CheckIcon /> {success}
+                  </span>
+                </Button>
+              ) : (
+                <Button
+                  disabled={isPending}
+                  type="submit"
+                  className="mt-2 w-full text-base"
+                >
+                  Register
+                </Button>
+              )} */}
               {isCredential && (
                 <span
                   onClick={() => {
                     setIsCredentials(false);
+                    setSuccess("");
+                    setError("");
                     form.reset();
                   }}
                   className="cursor-pointer self-center underline hover:text-primary"

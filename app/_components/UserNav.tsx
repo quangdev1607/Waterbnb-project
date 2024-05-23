@@ -1,4 +1,12 @@
-import { LogInIcon, MenuIcon, UserPlus } from "lucide-react";
+import {
+  CalendarCheck,
+  Heart,
+  List,
+  LogInIcon,
+  LogOut,
+  MenuIcon,
+  UserPlus,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,9 +18,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { getCurrentUserClient } from "@/utils/getUserClient";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { signOut } from "../_actions/auth";
 
 export function UserNav() {
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    const getData = async () => {
+      const currentUser = await getCurrentUserClient();
+      setUser(currentUser);
+    };
+    getData();
+  }, []);
+
+  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,22 +47,58 @@ export function UserNav() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Hello, guest!</DropdownMenuLabel>
+        <DropdownMenuLabel>{`Hello ${user ? "user!!!" : "guest"}`}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href={"/auth/register"}>
-              <UserPlus className="mr-2 h-4 w-4" />
-              <span>Register</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={"/auth/login"}>
-              <LogInIcon className="mr-2 h-4 w-4" />
-              <span>Login</span>
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        {user ? (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Link href={"/listings"}>
+                  <List className="mr-2 h-4 w-4" />
+                  My listings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={"/favorites"}>
+                  <Heart className="mr-2 h-4 w-4" />
+                  My favorites
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={"/reservations"}>
+                  <CalendarCheck className="mr-2 h-4 w-4" />
+                  My reservations
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                signOut();
+                setUser(null);
+              }}
+              variant="destructive"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span className="font-bold">Logout</span>
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <DropdownMenuGroup>
+            <DropdownMenuItem asChild>
+              <Link href={"/auth/register"}>
+                <UserPlus className="mr-2 h-4 w-4" />
+                <span>Register</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={"/auth/login"}>
+                <LogInIcon className="mr-2 h-4 w-4" />
+                <span>Login</span>
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

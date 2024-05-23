@@ -1,7 +1,12 @@
-export default function Home() {
-    return (
-        <>
-            <h1>Hello world!!!</h1>
-        </>
-    );
+import { getCurrentUserServer } from "@/utils/getUserServer";
+import { createClient } from "@/utils/supabase/server";
+
+export default async function Home() {
+  const currentUser = await getCurrentUserServer();
+
+  return (
+    <>
+      <h1>Hello {currentUser?.email}</h1>
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 "use client";
-import { login } from "@/app/_actions/auth";
+import { login, signup } from "@/app/_actions/auth";
+import { FormError } from "@/app/_components/FormError";
 import { SocialAccounts } from "@/app/_components/SocialAccounts";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,17 +24,34 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Separator } from "@/components/ui/separator";
 import logo from "@/public/mobilewaterbnblogo.png";
 import { LoginSchema } from "@/schemas/LoginSchema";
+import { wait } from "@/utils/wait";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import router from "next/router";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 export default function LoginPage() {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
   });
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
+    setError("");
+    setSuccess("");
+
+    startTransition(async () => {
+      login(values).then((data) => {
+        setError(data?.error);
+        if (data?.error) toast.error(`Error: ${data.error}`);
+      });
+    });
   };
 
   return (
@@ -83,9 +101,24 @@ export default function LoginPage() {
                 );
               }}
             />
-            <Button className="mt-4 w-full text-base" type="submit">
+            <FormError message={error} />
+            {/* <Button
+              disabled={isPending}
+              className="mt-4 w-full text-base"
+              type="submit"
+            >
               Login
-            </Button>
+            </Button> */}
+            {isPending ? (
+              <Button disabled type="submit" size={"lg"}>
+                <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button type="submit" size={"lg"}>
+                Login
+              </Button>
+            )}
           </form>
         </Form>
       </CardContent>
