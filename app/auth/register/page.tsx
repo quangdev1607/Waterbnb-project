@@ -47,21 +47,19 @@ export default function RegisterPage() {
     setSuccess("");
 
     startTransition(async () => {
-      signup(values)
-        .then((data) => {
-          setError(data?.error);
-          setSuccess(data?.success);
-          if (data.error) toast.error(`Error: ${data.error}`);
-          if (data.success)
-            toast.success(
-              `🎉🎉🎉 ${data.success}, you will soon be back to homepage`,
-              { duration: 2000 },
-            );
-        })
-        .finally(async () => {
+      signup(values).then(async (data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+        if (data.error) toast.error(`Error: ${data.error}`);
+        if (data.success) {
+          toast.success(
+            `🎉🎉🎉 ${data.success}, you will soon be back to homepage`,
+            { duration: 2000 },
+          );
           await wait(2000);
           router.push("/");
-        });
+        }
+      });
     });
   };
 

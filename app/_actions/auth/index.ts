@@ -46,6 +46,7 @@ export async function signup(values: z.infer<typeof RegisterSchema>) {
   const moreData = {
     first_name: validatedFields.data.firstName,
     last_name: validatedFields.data.lastName,
+    email: validatedFields.data.email,
   };
 
   const { error } = await supabase.auth.signUp({
@@ -76,4 +77,20 @@ export async function signOut() {
   }
   revalidatePath("/", "layout");
   redirect("/");
+}
+
+export async function signInWithGithub() {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: "http://localhost:3000/auth/callback",
+    },
+  });
+  console.log(data);
+
+  if (data.url) {
+    revalidatePath("/", "layout");
+    redirect(data.url); // use the redirect API for your server framework
+  }
 }
