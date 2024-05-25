@@ -59,7 +59,7 @@ export async function signup(values: z.infer<typeof RegisterSchema>) {
   });
 
   if (error) {
-    console.log(error);
+    // console.log(error);
     return { error: error.message };
   }
 
@@ -87,7 +87,6 @@ export async function signInWithGithub() {
       redirectTo: "http://localhost:3000/auth/callback",
     },
   });
-  console.log(data);
 
   if (data.url) {
     revalidatePath("/", "layout");

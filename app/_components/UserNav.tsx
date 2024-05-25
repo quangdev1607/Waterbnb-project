@@ -34,20 +34,40 @@ export function UserNav() {
     getData();
   }, []);
 
-  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="flex cursor-pointer items-center gap-x-2 rounded-full border px-5 py-2">
           <MenuIcon className="h-6 w-6 lg:h-5 lg:w-5" />
           <Avatar className="hidden h-8 w-8 lg:block">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage
+              src={
+                user && user.user_metadata.avatar_url
+                  ? user.user_metadata.avatar_url
+                  : "https://github.com/shadcn.png"
+              }
+              alt="@shadcn"
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{`Hello ${user ? "user!!!" : "guest"}`}</DropdownMenuLabel>
+        {user &&
+          user.user_metadata.first_name &&
+          user.user_metadata.first_name && (
+            <DropdownMenuLabel>
+              👋Hello, {user.user_metadata.first_name} $
+              {user.user_metadata.last_name}`
+            </DropdownMenuLabel>
+          )}
+
+        {user && user.user_metadata.full_name && (
+          <DropdownMenuLabel>
+            👋Hello, {user.user_metadata.full_name}
+          </DropdownMenuLabel>
+        )}
+        {!user && <DropdownMenuLabel>Hello, guest</DropdownMenuLabel>}
         <DropdownMenuSeparator />
         {user ? (
           <>
