@@ -13,9 +13,9 @@ export function Navbar() {
           alt="logo"
           className="hidden w-[200px] lg:block"
         />
-        <Image src={mobileLogo} alt="logo" className="block w-24 lg:hidden" />
+        <Image src={mobileLogo} alt="logo" className="block w-20 lg:hidden" />
       </Link>
-      <div className="rounded-full border px-5 py-2">
+      <div className=" hidden rounded-full border px-5 py-2 lg:block">
         <span>Search box coming soon...</span>
       </div>
       <UserNav />
