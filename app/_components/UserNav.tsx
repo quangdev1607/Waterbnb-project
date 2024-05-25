@@ -1,6 +1,7 @@
 import {
   CalendarCheck,
   Heart,
+  Home,
   List,
   LogInIcon,
   LogOut,
@@ -23,6 +24,7 @@ import { getCurrentUserClient } from "@/utils/getUserClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { signOut } from "../_actions/auth";
+import { createHome } from "../_actions/home";
 
 export function UserNav() {
   const [user, setUser] = useState<any>(null);
@@ -33,6 +35,10 @@ export function UserNav() {
     };
     getData();
   }, []);
+
+  const createAirBnBHome = createHome.bind(null, {
+    userId: user?.id as string,
+  });
 
   return (
     <DropdownMenu>
@@ -71,6 +77,18 @@ export function UserNav() {
         <DropdownMenuSeparator />
         {user ? (
           <>
+            <DropdownMenuItem>
+              <form
+                className="flex w-full items-center"
+                action={createAirBnBHome}
+              >
+                <Home className="mr-2 h-4 w-4" />
+                <button type="submit" className="w-full text-start">
+                  Airbnb your home
+                </button>
+              </form>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link href={"/listings"}>
