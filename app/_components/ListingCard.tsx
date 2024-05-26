@@ -1,8 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-// import { addToFavorite, removeFromFavorite } from "../actions";
+
 import { useCountries } from "@/lib/get-countries";
-// import { AddToFavoriteButton, RemoveFromFavoriteButton } from "./creation-submit";
+
+import { addToFavorite, removeFromFavorite } from "../_actions/favorite";
+import {
+  AddToFavoriteButton,
+  RemoveFromFavoriteButton,
+} from "./CreationSubmit";
 
 type HomeItem = {
   imagePath: string;
@@ -11,8 +18,8 @@ type HomeItem = {
   price: number;
   userId: string | undefined;
   isInFavoriteList: boolean;
-  favoriteId: string;
-  homeId: string;
+  favoriteId: string | number;
+  homeId: string | number;
   pathName: string;
 };
 
@@ -38,26 +45,26 @@ export default function ListingCard({
           fill
           className="mb-3 h-full rounded-lg object-cover"
         />
-        {/* {userId && (
-                    <div className="z-10 absolute top-2 right-2">
-                        {isInFavoriteList ? (
-                            <form action={removeFromFavorite}>
-                                <input type="hidden" name="favoriteId" value={favoriteId} />
-                                <input type="hidden" name="userId" value={userId} />
-                                <input type="hidden" name="pathName" value={pathName} />
-                                <RemoveFromFavoriteButton />
-                            </form>
-                        ) : (
-                            <form action={addToFavorite}>
-                                <input type="hidden" name="homeId" value={homeId} />
-                                <input type="hidden" name="userId" value={userId} />
-                                <input type="hidden" name="pathName" value={pathName} />
+        {userId && (
+          <div className="absolute right-2 top-2 z-10">
+            {isInFavoriteList ? (
+              <form action={removeFromFavorite}>
+                <input type="hidden" name="favoriteId" value={favoriteId} />
+                <input type="hidden" name="userId" value={userId} />
+                <input type="hidden" name="pathName" value={pathName} />
+                <RemoveFromFavoriteButton />
+              </form>
+            ) : (
+              <form action={addToFavorite}>
+                <input type="hidden" name="homeId" value={homeId} />
+                <input type="hidden" name="userId" value={userId} />
+                <input type="hidden" name="pathName" value={pathName} />
 
-                                <AddToFavoriteButton />
-                            </form>
-                        )}
-                    </div>
-                )} */}
+                <AddToFavoriteButton />
+              </form>
+            )}
+          </div>
+        )}
       </div>
       <Link href={`/home/${homeId}`}>
         <div className=" mt-2">

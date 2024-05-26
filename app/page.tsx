@@ -35,6 +35,7 @@ async function ShowItems({
     searchParams: searchParams,
     userId: currentUser?.id,
   });
+
   return (
     <>
       {homeData.length === 0 ? (
@@ -51,9 +52,9 @@ async function ShowItems({
               imagePath={item.photo as string}
               location={item.country as string}
               price={item.price as number}
-              // userId={currentUser?.id}
-              // favoriteId={item.Favorite[0]?.id}
-              // isInFavoriteList={item.Favorite.length > 0 ? true : false}
+              userId={currentUser?.id}
+              favoriteId={item.favorite[0]?.id}
+              isInFavoriteList={item.favorite.length > 0 ? true : false}
               homeId={item.id}
               pathName={"/"}
             />

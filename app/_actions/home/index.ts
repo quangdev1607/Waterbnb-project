@@ -149,10 +149,11 @@ export async function getHomeData({
 
   let query = supabase
     .from("home")
-    .select(`photo, id, title, description, price, country`)
+    .select(`photo, id, title, description, price, country, favorite(*)`)
     .eq("added_category", true)
     .eq("added_description", true)
-    .eq("added_location", true);
+    .eq("added_location", true)
+    .eq("favorite.userid", userId);
 
   if (searchParams?.filter) {
     query = query.eq("category_name", searchParams.filter);

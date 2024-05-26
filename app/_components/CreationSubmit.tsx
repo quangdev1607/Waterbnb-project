@@ -60,7 +60,7 @@ export function RemoveFromFavoriteButton() {
           disabled
           className="bg-primary-foreground"
         >
-          <Loader2Icon className="h-4 w-4 animate-spin text-primary" />
+          <Loader2Icon className="h-4 w-4 animate-spin " />
         </Button>
       ) : (
         <Button
@@ -69,7 +69,7 @@ export function RemoveFromFavoriteButton() {
           className="bg-primary-foreground"
           type="submit"
         >
-          <Heart className="h-4 w-4 text-primary" fill="#E21C49" />
+          <Heart className="h-4 w-4 " fill="#E21C49" />
         </Button>
       )}
     </>
