@@ -38,14 +38,14 @@ async function ShowItems({
 
   return (
     <>
-      {homeData.length === 0 ? (
+      {homeData?.length === 0 ? (
         <NoItems
           title="Sorry, no home for this category!"
           description="Please check for other category or you can create your own home"
         />
       ) : (
         <div className="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {homeData.map((item) => (
+          {homeData?.map((item) => (
             <ListingCard
               key={item.id}
               description={item.description as string}

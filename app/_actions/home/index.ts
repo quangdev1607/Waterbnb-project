@@ -142,7 +142,7 @@ export async function getHomeData({
   searchParams,
   userId,
 }: {
-  userId: string | undefined;
+  userId?: string | undefined;
   searchParams?: { filter?: string };
 }) {
   const supabase = createClient();
@@ -152,17 +152,17 @@ export async function getHomeData({
     .select(`photo, id, title, description, price, country, favorite(*)`)
     .eq("added_category", true)
     .eq("added_description", true)
-    .eq("added_location", true)
-    .eq("favorite.userid", userId);
+    .eq("added_location", true);
 
   if (searchParams?.filter) {
     query = query.eq("category_name", searchParams.filter);
   }
 
-  const { data, error } = await query;
-  if (error) {
-    throw new Error();
+  if (userId) {
+    query = query.eq("favorite.userid", userId);
   }
+
+  const { data, error } = await query;
 
   return data;
 }
@@ -181,4 +181,22 @@ export async function getHomeDetail(homeId: string) {
   const result = data[0];
 
   return result;
+}
+
+export async function getHomeListings({
+  userId,
+}: {
+  userId: string | undefined;
+}) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("home")
+    .select(`photo, id, title, description, price, country, favorite(*)`)
+    .eq("added_category", true)
+    .eq("added_description", true)
+    .eq("added_location", true)
+    .eq("userid", userId)
+    .eq("favorite.userid", userId);
+
+  return data;
 }

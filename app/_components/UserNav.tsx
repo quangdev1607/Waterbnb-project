@@ -63,8 +63,8 @@ export function UserNav() {
           user.user_metadata.first_name &&
           user.user_metadata.first_name && (
             <DropdownMenuLabel>
-              👋Hello, {user.user_metadata.first_name} $
-              {user.user_metadata.last_name}`
+              👋Hello, {user.user_metadata.first_name}{" "}
+              {user.user_metadata.last_name}
             </DropdownMenuLabel>
           )}
 
