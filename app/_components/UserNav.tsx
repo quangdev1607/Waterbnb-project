@@ -91,7 +91,7 @@ export function UserNav() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href={"/listings"}>
+                <Link href={"/my-list"}>
                   <List className="mr-2 h-4 w-4" />
                   My listings
                 </Link>

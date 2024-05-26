@@ -166,3 +166,19 @@ export async function getHomeData({
 
   return data;
 }
+
+export async function getHomeDetail(homeId: string) {
+  const supabase = createClient();
+
+  const { data, error } = (await supabase
+    .from("home")
+    .select(
+      "photo,description,bedrooms,bathrooms,title,category_name,price,country,guests, profiles(*)",
+    )
+    .limit(1)
+    .eq("id", homeId)) as unknown as { data: AdvancedHome[]; error: any };
+
+  const result = data[0];
+
+  return result;
+}
