@@ -1,9 +1,9 @@
 /**
  * An array of routes that are accessible to the public
  * These routes do not require authentication
- * @type {string[]}
+ * @type {(string | RegExp)[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/home"];
 /**
  * An array of routes that are used for authentication
  * These routes will redirect loggedIn user to /app/inbox

@@ -1,6 +1,5 @@
 "use server";
 
-import { Database } from "@/types/supabase";
 import { createClient } from "@/utils/supabase/server";
 
 import { redirect } from "next/navigation";
@@ -173,7 +172,7 @@ export async function getHomeDetail(homeId: string) {
   const { data, error } = (await supabase
     .from("home")
     .select(
-      "photo,description,bedrooms,bathrooms,title,category_name,price,country,guests, profiles(*)",
+      "photo,description,bedrooms,bathrooms,title,category_name,price,country,guests, profiles(*), reservation(*)",
     )
     .limit(1)
     .eq("id", homeId)) as unknown as { data: AdvancedHome[]; error: any };
@@ -199,4 +198,26 @@ export async function getHomeListings({
     .eq("favorite.userid", userId);
 
   return data;
+}
+
+export async function createReservation(formData: FormData) {
+  const userId = formData.get("userId") as string;
+  const homeId = formData.get("homeId") as string;
+  const startDate = formData.get("startDate") as string;
+  const endDate = formData.get("endDate") as string;
+
+  const supabase = createClient();
+
+  const { error } = await supabase.from("reservation").insert({
+    userId: userId,
+    start_date: startDate,
+    end_date: endDate,
+    homeId: homeId,
+  });
+
+  if (error) {
+    console.log({ error });
+    throw new Error(error.message);
+  }
+  return redirect("/");
 }

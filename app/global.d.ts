@@ -5,6 +5,7 @@ declare global {
   interface AdvancedHome extends Home {
     favorite: Favorite[];
     profiles: Profiles;
+    reservation: Reservation[];
   }
   type User = Database["public"]["Tables"]["profiles"]["Row"];
   type Favorite = Database["public"]["Tables"]["favorite"]["Row"];
@@ -13,4 +14,5 @@ declare global {
   }
 
   type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
+  type Reservation = Database["public"]["Tables"]["reservation"]["Row"];
 }

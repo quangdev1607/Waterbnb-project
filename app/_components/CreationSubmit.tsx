@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Heart, Loader2Icon } from "lucide-react";
+import { Heart, Loader2, Loader2Icon } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 export function CreationSubmit() {
@@ -70,6 +70,24 @@ export function RemoveFromFavoriteButton() {
           type="submit"
         >
           <Heart className="h-4 w-4 " fill="#E21C49" />
+        </Button>
+      )}
+    </>
+  );
+}
+
+export function ReservationSubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      {pending ? (
+        <Button className="w-full" disabled>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait...
+        </Button>
+      ) : (
+        <Button className="w-full" type="submit">
+          Make a Reservation!
         </Button>
       )}
     </>

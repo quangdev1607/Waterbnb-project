@@ -4,158 +4,200 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       favorite: {
         Row: {
-          created_at: string | null
-          homeid: number | null
-          id: number
-          userid: string | null
-        }
+          created_at: string | null;
+          homeid: number | null;
+          id: number;
+          userid: string | null;
+        };
         Insert: {
-          created_at?: string | null
-          homeid?: number | null
-          id?: never
-          userid?: string | null
-        }
+          created_at?: string | null;
+          homeid?: number | null;
+          id?: never;
+          userid?: string | null;
+        };
         Update: {
-          created_at?: string | null
-          homeid?: number | null
-          id?: never
-          userid?: string | null
-        }
+          created_at?: string | null;
+          homeid?: number | null;
+          id?: never;
+          userid?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "favorite_homeid_fkey"
-            columns: ["homeid"]
-            isOneToOne: false
-            referencedRelation: "home"
-            referencedColumns: ["id"]
+            foreignKeyName: "favorite_homeid_fkey";
+            columns: ["homeid"];
+            isOneToOne: false;
+            referencedRelation: "home";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "favorite_userid_fkey"
-            columns: ["userid"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
+            foreignKeyName: "favorite_userid_fkey";
+            columns: ["userid"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       home: {
         Row: {
-          added_category: boolean | null
-          added_description: boolean | null
-          added_location: boolean | null
-          bathrooms: string | null
-          bedrooms: string | null
-          category_name: string | null
-          country: string | null
-          created_at: string | null
-          description: string | null
-          guests: string | null
-          id: number
-          photo: string | null
-          price: number | null
-          title: string | null
-          userid: string | null
-        }
+          added_category: boolean | null;
+          added_description: boolean | null;
+          added_location: boolean | null;
+          bathrooms: string | null;
+          bedrooms: string | null;
+          category_name: string | null;
+          country: string | null;
+          created_at: string | null;
+          description: string | null;
+          guests: string | null;
+          id: number;
+          photo: string | null;
+          price: number | null;
+          title: string | null;
+          userid: string | null;
+        };
         Insert: {
-          added_category?: boolean | null
-          added_description?: boolean | null
-          added_location?: boolean | null
-          bathrooms?: string | null
-          bedrooms?: string | null
-          category_name?: string | null
-          country?: string | null
-          created_at?: string | null
-          description?: string | null
-          guests?: string | null
-          id?: never
-          photo?: string | null
-          price?: number | null
-          title?: string | null
-          userid?: string | null
-        }
+          added_category?: boolean | null;
+          added_description?: boolean | null;
+          added_location?: boolean | null;
+          bathrooms?: string | null;
+          bedrooms?: string | null;
+          category_name?: string | null;
+          country?: string | null;
+          created_at?: string | null;
+          description?: string | null;
+          guests?: string | null;
+          id?: never;
+          photo?: string | null;
+          price?: number | null;
+          title?: string | null;
+          userid?: string | null;
+        };
         Update: {
-          added_category?: boolean | null
-          added_description?: boolean | null
-          added_location?: boolean | null
-          bathrooms?: string | null
-          bedrooms?: string | null
-          category_name?: string | null
-          country?: string | null
-          created_at?: string | null
-          description?: string | null
-          guests?: string | null
-          id?: never
-          photo?: string | null
-          price?: number | null
-          title?: string | null
-          userid?: string | null
-        }
+          added_category?: boolean | null;
+          added_description?: boolean | null;
+          added_location?: boolean | null;
+          bathrooms?: string | null;
+          bedrooms?: string | null;
+          category_name?: string | null;
+          country?: string | null;
+          created_at?: string | null;
+          description?: string | null;
+          guests?: string | null;
+          id?: never;
+          photo?: string | null;
+          price?: number | null;
+          title?: string | null;
+          userid?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "home_userid_fkey"
-            columns: ["userid"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
+            foreignKeyName: "home_userid_fkey";
+            columns: ["userid"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       profiles: {
         Row: {
-          avatar_url: string | null
-          email: string
-          first_name: string | null
-          id: string
-          last_name: string | null
-        }
+          avatar_url: string | null;
+          email: string;
+          first_name: string | null;
+          id: string;
+          last_name: string | null;
+        };
         Insert: {
-          avatar_url?: string | null
-          email: string
-          first_name?: string | null
-          id: string
-          last_name?: string | null
-        }
+          avatar_url?: string | null;
+          email: string;
+          first_name?: string | null;
+          id: string;
+          last_name?: string | null;
+        };
         Update: {
-          avatar_url?: string | null
-          email?: string
-          first_name?: string | null
-          id?: string
-          last_name?: string | null
-        }
+          avatar_url?: string | null;
+          email?: string;
+          first_name?: string | null;
+          id?: string;
+          last_name?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "profiles_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
-        ]
-      }
-    }
+        ];
+      };
+      reservation: {
+        Row: {
+          created_at: Date;
+          end_date: Date;
+          homeId: number | null;
+          id: string;
+          start_date: Date;
+          userId: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          end_date: string;
+          homeId?: number | null;
+          id?: string;
+          start_date: string;
+          userId?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          end_date?: string;
+          homeId?: number | null;
+          id?: string;
+          start_date?: string;
+          userId?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "reservation_homeId_fkey";
+            columns: ["homeId"];
+            isOneToOne: false;
+            referencedRelation: "home";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "reservation_userId_fkey";
+            columns: ["userId"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -168,7 +210,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -176,11 +218,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -191,17 +233,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -212,17 +254,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -235,4 +277,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+    : never;
