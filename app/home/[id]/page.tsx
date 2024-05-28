@@ -2,13 +2,20 @@ import { createReservation, getHomeDetail } from "@/app/_actions/home";
 import { CategoryShowCase } from "@/app/_components/CategoryShowcase";
 import { ReservationSubmitButton } from "@/app/_components/CreationSubmit";
 import { HomeMap } from "@/app/_components/HomeMap";
+import { Review } from "@/app/_components/Review";
 import { SelectCalendar } from "@/app/_components/SelectMap";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { formatCurrency } from "@/lib/formatters";
 import { useCountries } from "@/lib/get-countries";
 import { getCurrentUserServer } from "@/utils/getUserServer";
+import { CookingPot, Luggage, Snowflake, Tv, Waves, Wifi } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { BiSolidWasher } from "react-icons/bi";
+import { FaWater } from "react-icons/fa";
+import { GiDesk } from "react-icons/gi";
+import { MdOutlineBalcony } from "react-icons/md";
 
 export default async function HomePage({ params }: { params: { id: string } }) {
   const homeData = await getHomeDetail(params.id);
@@ -30,7 +37,7 @@ export default async function HomePage({ params }: { params: { id: string } }) {
         />
       </div>
       <div className="mt-6  flex justify-between gap-x-24">
-        <div className="w-2/3">
+        <div className="lg:w-2/3">
           <span className="text-xl font-medium">
             {country?.flag} {country?.label} / {country?.region}
           </span>
@@ -58,29 +65,89 @@ export default async function HomePage({ params }: { params: { id: string } }) {
             </div>
           </div>
           <Separator className="my-6" />
-          <CategoryShowCase categoryName={homeData?.category_name as string} />
-          <Separator className="my-6" />
-          <span className="text-muted-foreground">{homeData?.description}</span>
-          <Separator className="my-6" />
-          <HomeMap locationValue={country?.value as string} />
-        </div>
-        <form action={createReservation}>
-          <input type="hidden" name="homeId" value={params.id} />
-          <input type="hidden" name="userId" value={currentUser?.id} />
-          <SelectCalendar
-            userId={currentUser?.id as string}
-            reservation={homeData?.reservation}
+          <CategoryShowCase
+            hostName={homeData.profiles.first_name as string}
+            categoryName={homeData?.category_name as string}
           />
+          <Separator className="my-6" />
+          <div className="flex flex-col gap-y-4">
+            <h1 className="text-2xl font-semibold">About this page</h1>
+            <span className="text-muted-foreground">
+              {homeData?.description}
+            </span>
+          </div>
+          <Separator className="my-6" />
+          <div className="flex flex-col gap-y-4">
+            <h1 className="text-2xl font-semibold">What this place offers</h1>
+            <div className="line-clamp-4 grid  gap-y-4  lg:grid-cols-2">
+              <div className="flex items-center gap-x-2 font-normal ">
+                <Waves />
+                <span>Sea view</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <CookingPot />
+                <span>Kitchen</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <GiDesk className="h-[24px] w-[24px]" />
+                <span>Dedicated workspace</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <BiSolidWasher className="h-[24px] w-[24px]" />
+                <span>Washer</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <MdOutlineBalcony className="h-[24px] w-[24px]" />
+                <span>Patio or balcony</span>
+              </div>
 
-          {/* {currentUser?.id ? (
-            <ReservationSubmitButton />
-          ) : (
-            <Button>
-              <Link href={"/auth/login"}>Make a reservation</Link>
-            </Button>
-          )} */}
-        </form>
+              <div className="flex items-center gap-x-2 font-normal">
+                <FaWater className="h-[24px] w-[24px]" />
+                <span>Waterfront</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <Wifi />
+                <span>Fast wifi – 221 Mbps</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <Tv />
+                <span>TV with standard cable</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <Snowflake />
+                <span>Air conditioning</span>
+              </div>
+              <div className="flex items-center gap-x-2 font-normal">
+                <Luggage />
+                <span>Luggage dropoff allowed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="hidden md:block">
+          <Card className="sticky top-6 ">
+            <CardContent>
+              <div className="mt-2 flex items-center gap-x-2 text-xl">
+                <span className="text-muted-foreground line-through">{`${formatCurrency(homeData.price as number)}`}</span>
+                <span className="font-bold">{`${formatCurrency(Math.round((homeData.price as number) * 0.8))}`}</span>
+                <span className="tracking-tight">night</span>
+              </div>
+              <form action={createReservation}>
+                <input type="hidden" name="homeId" value={params.id} />
+                <input type="hidden" name="userId" value={currentUser?.id} />
+                <SelectCalendar
+                  userId={currentUser?.id as string}
+                  reservation={homeData?.reservation}
+                />
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
+      <Separator className="my-6" />
+      <Review />
+      <Separator className="my-6" />
+      <HomeMap locationValue={country?.value as string} />
     </div>
   );
 }

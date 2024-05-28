@@ -15,4 +15,7 @@ declare global {
 
   type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
   type Reservation = Database["public"]["Tables"]["reservation"]["Row"];
+  interface AdvancedReservation extends Reservation {
+    home: AdvancedHome;
+  }
 }

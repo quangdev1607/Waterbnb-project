@@ -141,11 +141,11 @@ export type Database = {
       };
       reservation: {
         Row: {
-          created_at: Date;
-          end_date: Date;
+          created_at: string;
+          end_date: string;
           homeId: number | null;
           id: string;
-          start_date: Date;
+          start_date: string;
           userId: string | null;
         };
         Insert: {

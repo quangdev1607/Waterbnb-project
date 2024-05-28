@@ -13,8 +13,8 @@ export default async function ListingsPage() {
       <h2 className="text-3xl font-bold tracking-tight">My Homes</h2>
       {myHomeData?.length === 0 ? (
         <NoItems
-          title="Sorry, no favorites are found!"
-          description="You can mark a home as a favorite for later booking"
+          title="You have not created a home yet"
+          description="Try making one and share it to everyone"
         />
       ) : (
         <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
