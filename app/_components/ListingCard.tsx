@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { useCountries } from "@/lib/get-countries";
 
+import { Separator } from "@/components/ui/separator";
 import { addToFavorite, removeFromFavorite } from "../_actions/favorite";
 import {
   AddToFavoriteButton,
@@ -81,7 +82,7 @@ export default function ListingCard({
         className={`flex ${startDate && endDate ? "items-start" : "items-center"} justify-between`}
         href={`/home/${homeId}`}
       >
-        <div className=" mt-2">
+        <div className="mt-2">
           <span className="font-semibold">
             {country?.label} / {country?.region}
           </span>
@@ -92,8 +93,12 @@ export default function ListingCard({
             $<span className="font-semibold text-black">{price}</span>/night
           </p>
         </div>
-        {startDate && endDate && (
-          <div className="mt-2 flex flex-col ">
+      </Link>
+
+      {startDate && endDate && (
+        <>
+          <Separator />
+          <div className=" flex items-center justify-between ">
             <small>
               <span className="font-semibold">From:</span> {formatStartDate}
             </small>
@@ -101,8 +106,8 @@ export default function ListingCard({
               <span className="font-semibold">To:</span> {formatEndDate}
             </small>
           </div>
-        )}
-      </Link>
+        </>
+      )}
     </div>
   );
 }

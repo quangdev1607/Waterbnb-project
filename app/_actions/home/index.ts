@@ -142,7 +142,13 @@ export async function getHomeData({
   userId,
 }: {
   userId?: string | undefined;
-  searchParams?: { filter?: string };
+  searchParams?: {
+    filter?: string;
+    country?: string;
+    guest?: string;
+    room?: string;
+    bathroom?: string;
+  };
 }) {
   const supabase = createClient();
 
@@ -155,6 +161,18 @@ export async function getHomeData({
 
   if (searchParams?.filter) {
     query = query.eq("category_name", searchParams.filter);
+  }
+  if (searchParams?.country) {
+    query = query.eq("country", searchParams.country);
+  }
+  if (searchParams?.guest) {
+    query = query.eq("guests", searchParams.guest);
+  }
+  if (searchParams?.room) {
+    query = query.eq("bedrooms", searchParams.room);
+  }
+  if (searchParams?.bathroom) {
+    query = query.eq("bathrooms", searchParams.bathroom);
   }
 
   if (userId) {
