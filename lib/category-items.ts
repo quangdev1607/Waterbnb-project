@@ -1,4 +1,4 @@
-interface iAppProps {
+export interface iAppProps {
   id: number;
   name: string;
   title: string;

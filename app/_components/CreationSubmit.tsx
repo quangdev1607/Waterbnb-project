@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Heart, Loader2, Loader2Icon } from "lucide-react";
+import { Delete, Edit, Heart, Loader2, Loader2Icon, Trash } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 export function CreationSubmit() {
@@ -88,6 +88,62 @@ export function ReservationSubmitButton() {
       ) : (
         <Button className="w-full" type="submit">
           Make a Reservation!
+        </Button>
+      )}
+    </>
+  );
+}
+
+export function EditButton() {
+  return (
+    <>
+      <Button
+        variant={"outline"}
+        size={"icon"}
+        className="bg-primary-foreground"
+        type="submit"
+      >
+        <Edit className="h-4 w-4" />
+      </Button>
+    </>
+  );
+}
+export function DeleteButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      {pending ? (
+        <Button
+          className="flex items-center justify-center"
+          disabled
+          variant={"destructive"}
+          size={"default"}
+        >
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Please wait...
+        </Button>
+      ) : (
+        <Button variant={"destructive"} size={"default"} type="submit">
+          Delete
+        </Button>
+      )}
+    </>
+  );
+}
+
+export function UpdateHomeSubmitBtn() {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      {pending ? (
+        <Button disabled>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait...
+        </Button>
+      ) : (
+        <Button variant={"default"} size={"default"} type="submit">
+          Save
         </Button>
       )}
     </>

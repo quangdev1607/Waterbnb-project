@@ -67,7 +67,7 @@ export function SearchModalCompnent() {
               <DialogHeader>
                 <DialogTitle>Select a Country</DialogTitle>
                 <DialogDescription>
-                  Pleae choose a Country, so that what you want
+                  Please choose a Country, so that what you want
                 </DialogDescription>
               </DialogHeader>
 
@@ -96,9 +96,6 @@ export function SearchModalCompnent() {
             <>
               <DialogHeader>
                 <DialogTitle>Select all the info you need</DialogTitle>
-                <DialogDescription>
-                  Please Choose a Country, so that what you want
-                </DialogDescription>
               </DialogHeader>
 
               <Card>

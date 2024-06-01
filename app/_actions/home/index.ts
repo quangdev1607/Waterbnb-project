@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 import { redirect } from "next/navigation";
 
@@ -99,7 +100,7 @@ export async function createDescription(formdata: FormData) {
   const supabase = createClient();
   const { data: imageData } = await supabase.storage
     .from("images")
-    .upload(`${imageFile.name}-${new Date()}`, imageFile, {
+    .upload(`${imageFile.name}`, imageFile, {
       cacheControl: "2592000",
       contentType: "image/png",
     });
@@ -190,7 +191,7 @@ export async function getHomeDetail(homeId: string) {
   const { data, error } = (await supabase
     .from("home")
     .select(
-      "photo,description,bedrooms,bathrooms,title,category_name,price,country,guests, profiles(*), reservation(*)",
+      "id,photo,description,bedrooms,bathrooms,title,category_name,price,country,guests, profiles(*), reservation(*)",
     )
     .limit(1)
     .eq("id", homeId)) as unknown as { data: AdvancedHome[]; error: any };
@@ -238,4 +239,89 @@ export async function createReservation(formData: FormData) {
     throw new Error(error.message);
   }
   return redirect("/");
+}
+
+//----------------------------------------------------------------------------
+export async function updateHome(formdata: FormData) {
+  const title = formdata.get("title") as string;
+  const description = formdata.get("description") as string;
+  const price = formdata.get("price");
+  const imageFile = formdata.get("image") as File;
+  const homeId = formdata.get("homeId") as string;
+  const categoryName = formdata.get("categoryName") as string;
+  const guestNumber = formdata.get("guests") as string;
+  const roomNumber = formdata.get("bedrooms") as string;
+  const bathroomNumber = formdata.get("bathrooms") as string;
+  const previousImage = formdata.get("previousImg") as string;
+  // console.log({
+  //   title,
+  //   description,
+  //   price,
+  //   imageFile,
+  //   homeId,
+  //   categoryName,
+  //   guestNumber,
+  //   roomNumber,
+  //   bathroomNumber,
+  //   previousImage,
+  // });
+
+  const supabase = createClient();
+  if (imageFile.size !== 0) {
+    const { error } = await supabase.storage
+      .from("images")
+      .remove([`${previousImage}`]);
+
+    await supabase.storage
+      .from("images")
+      .upload(`${imageFile.name}`, imageFile, {
+        cacheControl: "2592000",
+        contentType: "image/png",
+      });
+    if (error) {
+      console.log(error);
+      return { error };
+    }
+  }
+
+  const { error } = await supabase
+    .from("home")
+    .update({
+      title,
+      description,
+      price,
+      category_name: categoryName,
+      guests: guestNumber,
+      bedrooms: roomNumber,
+      bathrooms: bathroomNumber,
+      photo: `${imageFile.name}`,
+    })
+    .eq("id", homeId);
+
+  if (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
+  revalidatePath("/", "layout");
+  return redirect("/");
+}
+
+export async function deleteHome(formdata: FormData) {
+  const homeId = formdata.get("homeId");
+  const imageFile = formdata.get("imagePath");
+  // console.log({ homeId, imageFile });
+  const supabase = createClient();
+  const { error } = await supabase.storage
+    .from("images")
+    .remove([`${imageFile}`]);
+
+  if (error) {
+    console.log(error);
+    throw new Error("test");
+  }
+
+  await supabase.from("home").delete().eq("id", homeId);
+
+  revalidatePath("/", "layout");
+  return { data: "success" };
 }

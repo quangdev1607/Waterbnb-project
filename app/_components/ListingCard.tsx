@@ -5,12 +5,18 @@ import Link from "next/link";
 
 import { useCountries } from "@/lib/get-countries";
 
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Edit } from "lucide-react";
 import { addToFavorite, removeFromFavorite } from "../_actions/favorite";
+import { deleteHome } from "../_actions/home";
 import {
   AddToFavoriteButton,
+  DeleteButton,
+  EditButton,
   RemoveFromFavoriteButton,
 } from "./CreationSubmit";
+import { DeleteAlertModal } from "./DeleteAlertModal";
 
 type HomeItem = {
   imagePath: string;
@@ -44,6 +50,7 @@ export default function ListingCard({
 
   const formatStartDate = startDate?.split("T")[0];
   const formatEndDate = endDate?.split("T")[0];
+
   return (
     <div className="flex flex-col">
       <div className="relative h-72">
@@ -56,7 +63,7 @@ export default function ListingCard({
         {pathName !== "/reservations" && (
           <>
             {userId && (
-              <div className="absolute right-2 top-2 z-10">
+              <div className="absolute left-2 top-2 z-10">
                 {isInFavoriteList ? (
                   <form action={removeFromFavorite}>
                     <input type="hidden" name="favoriteId" value={favoriteId} />
@@ -75,6 +82,26 @@ export default function ListingCard({
                 )}
               </div>
             )}
+          </>
+        )}
+        {pathName === "/my-list" && userId && (
+          <>
+            <div className="absolute right-2 top-2 z-10">
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                className="bg-primary-foreground"
+                type="submit"
+                asChild
+              >
+                <Link href={`/home/${homeId}/edit`}>
+                  <Edit className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="absolute right-2 top-14 z-10">
+              <DeleteAlertModal id={homeId} imagePath={imagePath} />
+            </div>
           </>
         )}
       </div>

@@ -32,7 +32,7 @@ export default async function ListingsPage() {
                 isInFavoriteList={
                   (item.favorite.length as number) > 0 ? true : false
                 }
-                pathName={"/listings"}
+                pathName={"/my-list"}
               ></ListingCard>
             );
           })}
