@@ -102,13 +102,6 @@ export default function LoginPage() {
               }}
             />
             <FormError message={error} />
-            {/* <Button
-              disabled={isPending}
-              className="mt-4 w-full text-base"
-              type="submit"
-            >
-              Login
-            </Button> */}
             {isPending ? (
               <Button disabled type="submit" size={"lg"}>
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />

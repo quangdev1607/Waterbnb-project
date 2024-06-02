@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: { id: string } }) {
             <span>{homeData?.bathrooms} bathroom(s)</span>
           </div>
           <div className="mt-6 flex">
-            <img
+            <Image
               src={
                 (homeData?.profiles?.avatar_url as string) ??
                 "https://github.com/shadcn.png"
