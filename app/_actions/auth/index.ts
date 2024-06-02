@@ -84,7 +84,8 @@ export async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo:
+        "http://waterbnb-project-6sq3mel0r-quang-phans-projects.vercel.app/auth/callback",
     },
   });
 
