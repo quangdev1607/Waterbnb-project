@@ -2,11 +2,13 @@
 // import { unstable_noStore as noStore } from "next/cache";
 
 import { getCurrentUserServer } from "@/utils/getUserServer";
+import { unstable_noStore as noStore } from "next/cache";
 import { getReservations } from "../_actions/reservations";
 import ListingCard from "../_components/ListingCard";
 import NoItems from "../_components/NoItems";
 
 export default async function ReservationsRoute() {
+  noStore();
   const user = await getCurrentUserServer();
 
   const data = await getReservations(user?.id as string);

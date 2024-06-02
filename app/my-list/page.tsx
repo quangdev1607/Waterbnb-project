@@ -1,10 +1,12 @@
 import { getCurrentUserServer } from "@/utils/getUserServer";
+import { unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import { getHomeData, getHomeListings } from "../_actions/home";
 import ListingCard from "../_components/ListingCard";
 import NoItems from "../_components/NoItems";
 
 export default async function ListingsPage() {
+  noStore();
   const currentUser = await getCurrentUserServer();
   if (!currentUser) redirect("/");
   const myHomeData = await getHomeListings({ userId: currentUser?.id });

@@ -1,11 +1,13 @@
 import { getHomeDetail } from "@/app/_actions/home";
 import { EditForm } from "@/app/_components/EditPage";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function EditHomePage({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  noStore();
   const product = await getHomeDetail(id);
 
   return (

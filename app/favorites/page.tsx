@@ -1,10 +1,12 @@
 import { getCurrentUserServer } from "@/utils/getUserServer";
+import { unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import { getFavoriteData } from "../_actions/favorite";
 import ListingCard from "../_components/ListingCard";
 import NoItems from "../_components/NoItems";
 
 export default async function FavoritePage() {
+  noStore();
   const currentUser = await getCurrentUserServer();
   if (!currentUser) redirect("/");
   const favData = await getFavoriteData({ userId: currentUser?.id });

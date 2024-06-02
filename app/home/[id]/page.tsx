@@ -11,6 +11,7 @@ import { formatCurrency } from "@/lib/formatters";
 import { useCountries } from "@/lib/get-countries";
 import { getCurrentUserServer } from "@/utils/getUserServer";
 import { CookingPot, Luggage, Snowflake, Tv, Waves, Wifi } from "lucide-react";
+import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import { BiSolidWasher } from "react-icons/bi";
 import { FaWater } from "react-icons/fa";
@@ -18,6 +19,7 @@ import { GiDesk } from "react-icons/gi";
 import { MdOutlineBalcony } from "react-icons/md";
 
 export default async function HomePage({ params }: { params: { id: string } }) {
+  noStore();
   const homeData = await getHomeDetail(params.id);
 
   const { getCountryByValues } = useCountries();

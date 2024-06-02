@@ -1,4 +1,5 @@
 import { getCurrentUserServer } from "@/utils/getUserServer";
+import { unstable_noStore as noStore } from "next/cache";
 import { Suspense } from "react";
 import { getHomeData } from "./_actions/home";
 import { CategoryFilterList } from "./_components/CategoryFilterList";
@@ -30,6 +31,7 @@ async function ShowItems({
     filter?: string;
   };
 }) {
+  noStore();
   const currentUser = await getCurrentUserServer();
   const homeData = await getHomeData({
     searchParams: searchParams,
