@@ -122,7 +122,7 @@ export default function LoginPage() {
         <Separator className="mt-4" />
         <small className="mt-2 italic hover:underline">
           <Link href={"/auth/register"} className="text-sm">
-            Don't have an account?
+            Dont have an account?
           </Link>
         </small>
       </CardFooter>
