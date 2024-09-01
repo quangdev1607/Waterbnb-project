@@ -3,7 +3,7 @@
  * These routes do not require authentication
  * @type {(string | RegExp)[]}
  */
-export const publicRoutes = ["/", "/home"];
+export const publicRoutes = ["/", "/home(.*)"];
 /**
  * An array of routes that are used for authentication
  * These routes will redirect loggedIn user to /app/inbox
