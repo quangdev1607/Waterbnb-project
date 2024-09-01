@@ -53,6 +53,8 @@ export function UserNav() {
                   : "https://github.com/shadcn.png"
               }
               alt="@shadcn"
+              width={40}
+              height={40}
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>

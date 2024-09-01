@@ -56,6 +56,8 @@ export default async function HomePage({ params }: { params: { id: string } }) {
               }
               alt="user profile"
               className="h-11 w-11 rounded-full"
+              width={44}
+              height={44}
             />
             <div className="ml-4 flex flex-col">
               <span className="text-lg font-semibold">
@@ -126,25 +128,41 @@ export default async function HomePage({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="hidden md:block">
-          <Card className="sticky top-6 ">
-            <CardContent>
-              <div className="mt-2 flex items-center gap-x-2 text-xl">
-                <span className="text-muted-foreground line-through">{`${formatCurrency(homeData.price as number)}`}</span>
-                <span className="font-bold">{`${formatCurrency(Math.round((homeData.price as number) * 0.8))}`}</span>
-                <span className="tracking-tight">night</span>
-              </div>
-              <form action={createReservation}>
-                <input type="hidden" name="homeId" value={params.id} />
-                <input type="hidden" name="userId" value={currentUser?.id} />
-                <SelectCalendar
-                  userId={currentUser?.id as string}
-                  reservation={homeData?.reservation}
-                />
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+        {currentUser ? (
+          <div className="hidden md:block">
+            <Card className="sticky top-6 ">
+              <CardContent>
+                <div className="mt-2 flex items-center gap-x-2 text-xl">
+                  <span className="text-muted-foreground line-through">{`${formatCurrency(homeData.price as number)}`}</span>
+                  <span className="font-bold">{`${formatCurrency(Math.round((homeData.price as number) * 0.8))}`}</span>
+                  <span className="tracking-tight">night</span>
+                </div>
+                <form action={createReservation}>
+                  <input type="hidden" name="homeId" value={params.id} />
+                  <input type="hidden" name="userId" value={currentUser?.id} />
+                  <SelectCalendar
+                    userId={currentUser?.id as string}
+                    reservation={homeData?.reservation}
+                  />
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          <div className="hidden md:block">
+            <Card className="sticky top-6 ">
+              <CardContent>
+                <div className="mt-2 flex items-center gap-x-2 text-xl">
+                  <span className="text-muted-foreground line-through">{`${formatCurrency(homeData.price as number)}`}</span>
+                  <span className="font-bold">{`${formatCurrency(Math.round((homeData.price as number) * 0.8))}`}</span>
+                  <span className="tracking-tight">night</span>
+                </div>
+
+                <SelectCalendar reservation={homeData?.reservation} />
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
       <Separator className="my-6" />
       <Review />

@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { eachDayOfInterval } from "date-fns";
-import { Link, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
@@ -12,7 +13,7 @@ export function SelectCalendar({
   reservation,
   userId,
 }: {
-  userId: string;
+  userId?: string;
   reservation:
     | {
         start_date: string;
@@ -82,7 +83,7 @@ export function SelectCalendar({
           )}
         </>
       ) : (
-        <Button>
+        <Button className="w-full">
           <Link href={"/auth/login"}>Make a reservation</Link>
         </Button>
       )}
