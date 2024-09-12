@@ -20,7 +20,7 @@ export function CategoryFilterList() {
     [searchParams],
   );
   return (
-    <div className="no-scroll-bar mt-5 flex justify-between gap-x-10 overflow-x-scroll">
+    <div className="no-scroll-bar mt-5 flex flex-wrap justify-between gap-x-10 overflow-x-scroll">
       {categoryItems.map((item) => {
         return (
           <Link

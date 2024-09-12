@@ -32,14 +32,6 @@ export function SocialAccounts() {
           </Button>
         )}
       </form>
-      {/* <Button
-        onClick={() => {}}
-        variant={"outline"}
-        className="flex w-full gap-x-2"
-      >
-        <FcGoogle />
-        <span>Continue with Google</span>
-      </Button> */}
     </div>
   );
 }
