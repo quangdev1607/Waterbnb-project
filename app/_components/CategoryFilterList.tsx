@@ -20,7 +20,7 @@ export function CategoryFilterList() {
     [searchParams],
   );
   return (
-    <div className="no-scroll-bar mt-5 flex flex-wrap justify-between gap-x-10 overflow-x-scroll">
+    <div className="no-scroll-bar mt-5 flex flex-wrap  gap-2 overflow-x-scroll">
       {categoryItems.map((item) => {
         return (
           <Link
@@ -29,7 +29,7 @@ export function CategoryFilterList() {
               search === item.name
                 ? "flex-shrink-0 border-b-2 border-primary pb-2 font-bold"
                 : "flex-shrink-0 opacity-70 hover:border-b-2 hover:border-black hover:border-opacity-30 hover:opacity-100 ",
-              "flex h-14 flex-col items-center gap-y-3 ",
+              "flex h-14 w-[90px] flex-col items-center gap-y-3",
             )}
             href={pathname + "?" + createQueryString("filter", item.name)}
           >
